@@ -1,5 +1,3 @@
-"use strict";
-
 const autoprefixer = require("autoprefixer");
 const path = require("path");
 const webpack = require("webpack");
@@ -92,7 +90,9 @@ module.exports = {
       entrypoints: path.resolve(paths.appSrc, "entrypoints"),
       images: path.resolve(paths.appSrc, "images"),
       utils: path.resolve(paths.appSrc, "utils"),
-      hocs: path.resolve(paths.appSrc, "hocs")
+      hocs: path.resolve(paths.appSrc, "hocs"),
+      apollo: path.resolve(paths.appSrc, "apollo"),
+      schemas: path.resolve(paths.appSrc, "schemas")
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
