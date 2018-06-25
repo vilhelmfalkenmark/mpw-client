@@ -8,12 +8,7 @@ class Root extends Component {
       <div
         className={s({ container: true, loggedIn: this.props.userLoggedIn })}
       >
-        <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Mypages Web</h1>
       </div>
     );
   }

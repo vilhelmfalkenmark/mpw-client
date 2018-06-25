@@ -1,5 +1,7 @@
+@import "variables/colors";
+
 .container {
-  background: red;
+  background: var(--color-b-dark-grey);
 }
 
 .loggedIn {

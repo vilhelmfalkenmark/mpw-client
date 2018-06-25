@@ -1,0 +1,34 @@
+:root {
+  /**
+ * ----------------------------------------------------
+ * NEW COLOR PALETTE BELOW
+ * ----------------------------------------------------
+ */
+
+  /* Base colors */
+  --color-b-black: rgb(41, 37, 38);
+  --color-b-dark-grey: rgb(211, 212, 213);
+  --color-b-light-grey: rgb(240, 240, 241);
+  --color-b-white: rgb(255, 255, 255);
+
+  /* Standard foodbags */
+  --color-sfb-dark: rgb(20, 86, 74);
+  --color-sfb-medium: rgb(154, 204, 174);
+  --color-sfb-light: rgb(218, 234, 214);
+
+  /* Morning foodbags */
+  --color-mfb-dark: rgb(90, 36, 0);
+  --color-mfb-medium: rgb(242, 178, 89);
+  --color-mfb-light: rgb(253, 236, 199);
+
+  /* Weekend foodbags */
+  --color-wfb-dark: rgb(86, 28, 69);
+  --color-wfb-medium: rgb(191, 166, 169);
+  --color-wfb-light: rgb(216, 201, 203);
+
+  /* Highlight colors used for campaigns, splashes etc. */
+  --color-hl-blue: rgb(0, 120, 191);
+  --color-hl-marine: rgb(0, 71, 113);
+  --color-hl-pink: rgb(226, 103, 128);
+  --color-hl-orange: rgb(229, 119, 70);
+}
