@@ -83,12 +83,14 @@ module.exports = {
     extensions: [".web.js", ".mjs", ".js", ".json", ".web.jsx", ".jsx"],
     alias: {
       components: path.resolve(paths.appSrc, "components"),
-      entrypoints: path.resolve(paths.appSrc, "entrypoints"),
+      entryPoints: path.resolve(paths.appSrc, "entryPoints"),
       images: path.resolve(paths.appSrc, "images"),
       utils: path.resolve(paths.appSrc, "utils"),
       hocs: path.resolve(paths.appSrc, "hocs"),
       apollo: path.resolve(paths.appSrc, "apollo"),
-      schemas: path.resolve(paths.appSrc, "schemas")
+      schemas: path.resolve(paths.appSrc, "schemas"),
+      router: path.resolve(paths.appSrc, "router"),
+      layout: path.resolve(paths.appSrc, "layout")
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
