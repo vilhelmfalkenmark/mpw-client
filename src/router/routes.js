@@ -41,7 +41,7 @@ const Deliveries = universal(
 export const AUTHENTICATION_ROUTE = {
   exact: true,
   title: "Logga in",
-  slug: "/login/",
+  path: "/login/",
   renderHeader: true,
   renderFooter: true,
   component: AuthenticateBeforeRender({
@@ -53,7 +53,8 @@ export const AUTHENTICATION_ROUTE = {
 export const DYNAMIC_ROUTE = {
   exact: false,
   title: "Dynamic page",
-  slug: "*",
+  path: "/",
+  // path: /^(?!.*(user|login)).*$/,
   renderHeader: true,
   renderFooter: true,
   component: AuthenticateBeforeRender({
@@ -65,7 +66,7 @@ export const DYNAMIC_ROUTE = {
 export const DELIVERIES_ROUTE = {
   exact: true,
   title: "Leveranser",
-  slug: "/deliveries/",
+  path: "/user/deliveries/",
   renderHeader: true,
   renderFooter: true,
   component: AuthenticateBeforeRender({

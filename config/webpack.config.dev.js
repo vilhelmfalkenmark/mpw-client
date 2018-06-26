@@ -1,4 +1,4 @@
-const autoprefixer = require("autoprefixer");
+// const autoprefixer = require("autoprefixer");
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -90,7 +90,8 @@ module.exports = {
       apollo: path.resolve(paths.appSrc, "apollo"),
       schemas: path.resolve(paths.appSrc, "schemas"),
       router: path.resolve(paths.appSrc, "router"),
-      layout: path.resolve(paths.appSrc, "layout")
+      layout: path.resolve(paths.appSrc, "layout"),
+      reduxStore: path.resolve(paths.appSrc, "reduxStore")
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).

@@ -10,11 +10,11 @@ class Header extends Component {
     return (
       <nav>
         <ul>
-          {Routes.map(route => (
-            <li>
+          {Routes.map((route, index) => (
+            <li key={index}>
               <NavLink
                 exact={route.exact}
-                to={route.slug}
+                to={route.path}
                 className={s({ link: true })}
                 activeClassName={s({ isActive: true })}
               >

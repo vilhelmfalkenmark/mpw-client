@@ -1,4 +1,4 @@
-const autoprefixer = require("autoprefixer");
+// const autoprefixer = require("autoprefixer");
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -16,7 +16,7 @@ const getClientEnvironment = require("./env");
 const publicPath = paths.servedPath;
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
-const shouldUseRelativeAssetPaths = publicPath === "./";
+// const shouldUseRelativeAssetPaths = publicPath === "./";
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
@@ -39,10 +39,10 @@ const cssFilename = "static/css/[name].[contenthash:8].css";
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
 // However, our output is structured with css, js and media folders.
 // To have this structure working with relative paths, we have to use custom options.
-const extractTextPluginOptions = shouldUseRelativeAssetPaths
-  ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split("/").length).join("../") }
-  : {};
+// const extractTextPluginOptions = shouldUseRelativeAssetPaths
+//   ? // Making sure that the publicPath goes back to to build folder.
+//     { publicPath: Array(cssFilename.split("/").length).join("../") }
+//   : {};
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -94,7 +94,8 @@ module.exports = {
       apollo: path.resolve(paths.appSrc, "apollo"),
       schemas: path.resolve(paths.appSrc, "schemas"),
       router: path.resolve(paths.appSrc, "router"),
-      layout: path.resolve(paths.appSrc, "layout")
+      layout: path.resolve(paths.appSrc, "layout"),
+      reduxStore: path.resolve(paths.appSrc, "reduxStore")
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
