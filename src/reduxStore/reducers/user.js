@@ -1,27 +1,27 @@
 import initialState from "reduxStore/initialState";
 
 import {
-  AUTHENTICATION_FETCHING,
-  AUTHENTICATION_REJECTED,
-  AUTHENTICATION_FULFILLED
-} from "reduxStore/actions/authentication";
+  USER_FETCHING,
+  USER_REJECTED,
+  USER_FULFILLED
+} from "reduxStore/actions/user";
 
-const authentication = (state = initialState.authentication, action) => {
+const user = (state = initialState.user, action) => {
   switch (action.type) {
-    case AUTHENTICATION_FETCHING: {
+    case USER_FETCHING: {
       return Object.assign({}, state, {
         fetching: true
       });
     }
-    case AUTHENTICATION_FULFILLED: {
+    case USER_FULFILLED: {
       return Object.assign({}, state, {
         fulfilled: true,
         fetching: false,
         rejected: false,
-        data: action.payload.data
+        customerData: action.customerData
       });
     }
-    case AUTHENTICATION_REJECTED: {
+    case USER_REJECTED: {
       return Object.assign({}, state, {
         fulfilled: false,
         fetching: false,
@@ -33,4 +33,4 @@ const authentication = (state = initialState.authentication, action) => {
   }
 };
 
-export default authentication;
+export default user;

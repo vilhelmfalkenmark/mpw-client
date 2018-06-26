@@ -1,5 +1,6 @@
 import universal from "react-universal-component";
-import AuthenticateBeforeRender from "hocs/AuthenticateBeforeRender";
+// import AuthenticateBeforeRender from "hocs/AuthenticateBeforeRender";
+// import store from "reduxStore/store";
 
 //////////////////////////////////////////////////
 /**
@@ -44,10 +45,8 @@ export const AUTHENTICATION_ROUTE = {
   path: "/login/",
   renderHeader: true,
   renderFooter: true,
-  component: AuthenticateBeforeRender({
-    EntryPoint: Authentication,
-    Authenticate: true
-  })
+  requiresAuthentication: false,
+  component: Authentication
 };
 
 export const DYNAMIC_ROUTE = {
@@ -57,10 +56,8 @@ export const DYNAMIC_ROUTE = {
   // path: /^(?!.*(user|login)).*$/,
   renderHeader: true,
   renderFooter: true,
-  component: AuthenticateBeforeRender({
-    EntryPoint: DynamicPage,
-    Authenticate: false
-  })
+  requiresAuthentication: false,
+  component: DynamicPage
 };
 
 export const DELIVERIES_ROUTE = {
@@ -69,10 +66,8 @@ export const DELIVERIES_ROUTE = {
   path: "/user/deliveries/",
   renderHeader: true,
   renderFooter: true,
-  component: AuthenticateBeforeRender({
-    EntryPoint: Deliveries,
-    Authenticate: true
-  })
+  requiresAuthentication: true,
+  component: Deliveries
 };
 
 export default [AUTHENTICATION_ROUTE, DELIVERIES_ROUTE, DYNAMIC_ROUTE];

@@ -1,8 +1,12 @@
 const initialState = {
-  authentication: {
+  user: {
     fetching: false,
     rejected: false,
-    fulfilled: false
+    fulfilled: false,
+    authenticated: false,
+    customerData: {
+      name: ""
+    }
   }
 };
 
