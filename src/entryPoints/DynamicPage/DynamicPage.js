@@ -44,7 +44,11 @@ class DynamicPage extends Component {
 
     return (
       <main>
-        <h1> DynamicPage route </h1>{" "}
+        {this.props.fulfilled ? (
+          <h1>{this.props.page.fields.title}</h1>
+        ) : (
+          <h1> DynamicPage route</h1>
+        )}
         <button onClick={this.handleSetTokenCookie}>
           {" "}
           Sätt en token kaka{" "}
@@ -60,7 +64,8 @@ class DynamicPage extends Component {
 const mapStateToProps = state => ({
   fetching: state.page.fetching,
   rejected: state.page.rejected,
-  fulfilled: state.page.fulfilled
+  fulfilled: state.page.fulfilled,
+  page: state.page.pageData
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -76,7 +81,7 @@ export default connect(
   graphql(GET_PAGE, {
     options: ownProps => ({
       variables: {
-        path: "/"
+        path: ownProps.location.pathname
       }
     }),
     skip: false
