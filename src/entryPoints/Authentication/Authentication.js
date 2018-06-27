@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import WithCss from "hocs/styles/WithCss";
+import {
+  POST_PHONE_AUTHENTICATION,
+  POST_EMAIL_AUTHENTICATION
+} from "schemas/authentication";
+import { graphql, compose } from "react-apollo";
+
 import s from "./Authentication.css";
 
 class Authentication extends Component {
   constructor() {
     super();
     this.state = {
-      phoneNumber: "",
-      pinCode: ""
+      phoneNumber: 123,
+      pinCode: 456
     };
   }
 
@@ -23,9 +29,12 @@ class Authentication extends Component {
     });
   };
 
-  handleSubmit() {
-    console.log("Skicka till GRAPHQL");
-  }
+  _handleSubmit = () => {
+    this.props.postPhoneAuthentication({
+      phoneNumber: this.state.phoneNumber,
+      pinCode: this.state.pinCode
+    });
+  };
 
   render() {
     const { phoneNumber, pinCode } = this.state;
@@ -57,6 +66,7 @@ class Authentication extends Component {
                 onChange={this._handlePinCodeOnChange}
               />
             </label>
+            <button onClick={this._handleSubmit}>Logga in!</button>
           </div>
         )}
       </main>
@@ -64,4 +74,11 @@ class Authentication extends Component {
   }
 }
 
-export default WithCss(Authentication, s);
+export default compose(
+  graphql(POST_PHONE_AUTHENTICATION, {
+    name: "postPhoneAuthentication"
+  }),
+  graphql(POST_EMAIL_AUTHENTICATION, {
+    name: "postEmailAuthentication"
+  })
+)(WithCss(Authentication, s));

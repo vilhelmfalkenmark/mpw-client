@@ -15,7 +15,7 @@ export function AuthenticateBeforeRender({
       if (props.data) {
         if (
           props.data.loading === false &&
-          props.data.currentUser &&
+          props.data.currentUser.name &&
           props.authenticated === false
         ) {
           props.userFulfilled(props.data.currentUser);
