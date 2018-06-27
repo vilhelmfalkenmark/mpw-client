@@ -1,12 +1,17 @@
-import initialState from "reduxStore/initialState";
-
 import {
   PAGE_FETCHING,
   PAGE_REJECTED,
   PAGE_FULFILLED
 } from "reduxStore/actions/page";
 
-const page = (state = initialState.page, action) => {
+export const INITIAL_STATE = {
+  fetching: false,
+  rejected: false,
+  fulfilled: false,
+  pageData: {}
+};
+
+const page = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case PAGE_FETCHING: {
       return Object.assign({}, state, {

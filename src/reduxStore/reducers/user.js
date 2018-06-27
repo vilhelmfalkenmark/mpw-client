@@ -1,12 +1,18 @@
-import initialState from "reduxStore/initialState";
-
 import {
   USER_FETCHING,
   USER_REJECTED,
   USER_FULFILLED
 } from "reduxStore/actions/user";
 
-const user = (state = initialState.user, action) => {
+export const INITIAL_STATE = {
+  fetching: false,
+  rejected: false,
+  fulfilled: false,
+  authenticated: false,
+  currentUser: {}
+};
+
+const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case USER_FETCHING: {
       return Object.assign({}, state, {
@@ -18,7 +24,8 @@ const user = (state = initialState.user, action) => {
         fulfilled: true,
         fetching: false,
         rejected: false,
-        customerData: action.customerData
+        authenticated: true,
+        currentUser: { ...action.payload }
       });
     }
     case USER_REJECTED: {
