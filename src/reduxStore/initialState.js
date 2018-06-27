@@ -3,10 +3,16 @@ const initialState = {
     fetching: false,
     rejected: false,
     fulfilled: false,
-    authenticated: false,
+    authenticated: true,
     customerData: {
       name: ""
     }
+  },
+  page: {
+    fetching: false,
+    rejected: false,
+    fulfilled: false,
+    pageData: {}
   }
 };
 
