@@ -19,11 +19,23 @@ class DynamicPage extends Component {
   }
 
   handleSetTokenCookie() {
-    setTokenCookie({ token: "abc123" });
+    setTokenCookie({
+      token: "abc123"
+    });
   }
 
   handleDeleteTokenCookie() {
     deleteTokenCookie();
+  }
+
+  static getDerivedStateFromProps(props) {
+    if (props.data) {
+      if (props.data.loading === false && props.data.page) {
+        props.updatePage(props.data.page);
+      }
+    }
+
+    return null;
   }
 
   render() {
@@ -32,11 +44,14 @@ class DynamicPage extends Component {
 
     return (
       <main>
-        <h1>DynamicPage route</h1>
-        <button onClick={this.handleSetTokenCookie}>Sätt en token kaka</button>
+        <h1> DynamicPage route </h1>{" "}
+        <button onClick={this.handleSetTokenCookie}>
+          {" "}
+          Sätt en token kaka{" "}
+        </button>{" "}
         <button onClick={this.handleDeleteTokenCookie}>
-          Radera en token kaka
-        </button>
+          Radera en token kaka{" "}
+        </button>{" "}
       </main>
     );
   }
