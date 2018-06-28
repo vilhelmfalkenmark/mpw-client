@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { logInUser } from "reduxStore/actions/user";
 import WithCss from "hocs/styles/WithCss";
+import { Redirect } from "react-router";
 import {
   POST_PHONE_AUTHENTICATION,
   POST_EMAIL_AUTHENTICATION
 } from "schemas/authentication";
+import { setTokenCookie } from "utils/helpers/cookies";
+
 import { graphql, compose } from "react-apollo";
 
 import s from "./Authentication.css";
@@ -13,7 +18,8 @@ class Authentication extends Component {
     super();
     this.state = {
       phoneNumber: 123,
-      pinCode: 456
+      pinCode: 456,
+      authenticationMethodIsPhone: true
     };
   }
 
@@ -29,11 +35,21 @@ class Authentication extends Component {
     });
   };
 
-  _handleSubmit = () => {
-    this.props.postPhoneAuthentication({
-      phoneNumber: this.state.phoneNumber,
-      pinCode: this.state.pinCode
-    });
+  _handlePhoneSubmit = () => {
+    this.props
+      .postPhoneAuthentication({
+        variables: {
+          phoneNumber: this.state.phoneNumber,
+          pinCode: this.state.pinCode
+        }
+      })
+      .then(({ data }) => {
+        setTokenCookie({ token: data.postPhoneAuthentication.token });
+        this.props.logInUser();
+      })
+      .catch(e => {
+        console.error("Fel inloggningsuppgifter");
+      });
   };
 
   render() {
@@ -41,6 +57,8 @@ class Authentication extends Component {
 
     return (
       <main className={s({ container: true })}>
+        {this.props.authenticated && <Redirect to="/" />}
+
         {this.props.authenticated ? (
           <div>
             <h1>Du är inloggad</h1>
@@ -66,6 +84,9 @@ class Authentication extends Component {
                 onChange={this._handlePinCodeOnChange}
               />
             </label>
+            <button onClick={this._handlePhoneSubmit}>
+              Logga in med telefonnummer
+            </button>
             <button onClick={this._handleSubmit}>Logga in!</button>
           </div>
         )}
@@ -74,11 +95,26 @@ class Authentication extends Component {
   }
 }
 
-export default compose(
-  graphql(POST_PHONE_AUTHENTICATION, {
-    name: "postPhoneAuthentication"
-  }),
-  graphql(POST_EMAIL_AUTHENTICATION, {
-    name: "postEmailAuthentication"
-  })
-)(WithCss(Authentication, s));
+const mapStateToProps = state => ({
+  authenticated: state.user.authenticated
+});
+
+const mapDispatchToProps = dispatch => ({
+  logInUser: () => {
+    dispatch(logInUser());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  compose(
+    graphql(POST_PHONE_AUTHENTICATION, {
+      name: "postPhoneAuthentication"
+    }),
+    graphql(POST_EMAIL_AUTHENTICATION, {
+      name: "postEmailAuthentication"
+    })
+  )(WithCss(Authentication, s))
+);

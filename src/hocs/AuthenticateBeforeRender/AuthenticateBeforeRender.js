@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { graphql } from "react-apollo";
+import { getTokenCookie } from "utils/helpers/cookies";
 
 import { GET_USER_INFO } from "schemas/user";
 
@@ -60,7 +61,7 @@ export function AuthenticateBeforeRender({
     mapDispatchToProps
   )(
     graphql(GET_USER_INFO, {
-      skip: ownProps => ownProps.authenticated
+      skip: ownProps => ownProps.authenticated || !getTokenCookie()
     })(AuthenticationBeforeRender)
   );
 }

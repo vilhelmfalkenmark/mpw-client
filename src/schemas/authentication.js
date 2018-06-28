@@ -1,9 +1,9 @@
 import gql from "graphql-tag";
 
 export const POST_PHONE_AUTHENTICATION = gql`
-  mutation postPhoneAuthentication($phone: Float!, $pinCode: Int!) {
+  mutation postPhoneAuthentication($phoneNumber: Float!, $pinCode: Int!) {
     postPhoneAuthentication: postPhoneAuthentication(
-      params: { phone: $phone, pinCode: $pinCode }
+      params: { phoneNumber: $phoneNumber, pinCode: $pinCode }
     ) {
       token
     }
