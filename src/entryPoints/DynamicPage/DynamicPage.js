@@ -1,35 +1,75 @@
 import React, { Component } from "react";
-import WithCss from "hocs/styles/WithCss";
+import { connect } from "react-redux";
+import { graphql } from "react-apollo";
+import { GET_PAGE } from "schemas/page";
+import { updatePage, rejectePage } from "reduxStore/actions/page";
+import ErrorPage from "components/ErrorPage";
 
-import s from "./DynamicPage.css";
+import ConfigurablePage from "./components/ConfigurablePage";
 
 class DynamicPage extends Component {
+  static getDerivedStateFromProps(props) {
+    if (props.data) {
+      if (
+        props.data.loading === false &&
+        props.data.page &&
+        !props.data.error
+      ) {
+        props.updatePage(props.data.page);
+      } else if (props.data.error) {
+        props.rejectePage();
+      }
+    }
+
+    return null;
+  }
+
   render() {
+    console.log(this.props);
+
+    const renderErrorPage = () => {
+      if (this.props.data.error.graphQLErrors[0].code === 404) {
+        return <ErrorPage code={404} />;
+      } else {
+        return <ErrorPage code={500} />;
+      }
+    };
+
     return (
-      <main className={s({ container: true })}>
-        <h1>DynamicPage route</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lacinia
-          nulla vitae urna vestibulum dignissim sit amet id risus. Cras lobortis
-          ipsum non leo ornare, sed eleifend odio suscipit. Pellentesque
-          facilisis, justo a finibus pretium, libero sem vestibulum nunc, ut
-          semper quam felis non nulla. Curabitur id lectus id arcu porttitor
-          bibendum quis at ligula. Donec at massa dapibus, facilisis mauris id,
-          pellentesque odio. Pellentesque euismod eu dui non rhoncus. Integer
-          laoreet ornare metus et convallis. Sed quis maximus sapien, non
-          dignissim odio. In ut quam at tellus vulputate lobortis id eget nisi.
-          Pellentesque a volutpat augue. In non pharetra est. Ut eu massa metus.
-          Praesent in convallis tortor. Donec dolor magna, efficitur quis
-          molestie eu, sagittis a lorem. Vivamus ac finibus magna, et placerat
-          tortor. Curabitur tempus at nulla eu iaculis. In vel eros eleifend,
-          pulvinar libero quis, feugiat risus. Aenean rutrum euismod turpis,
-          eget viverra mi vulputate id. Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Etiam suscipit placerat nisi ut elementum. Phasellus
-          ac magna dignissim, vestibulum massa a, posuere purus.
-        </p>
+      <main>
+        {this.props.fulfilled && <ConfigurablePage page={this.props.page} />}
+        {this.props.rejected && renderErrorPage()}
       </main>
     );
   }
 }
 
-export default WithCss(DynamicPage, s);
+const mapStateToProps = state => ({
+  fetching: state.page.fetching,
+  rejected: state.page.rejected,
+  fulfilled: state.page.fulfilled,
+  page: state.page.pageData
+});
+
+const mapDispatchToProps = dispatch => ({
+  updatePage: pageData => {
+    dispatch(updatePage(pageData));
+  },
+  rejectePage: () => {
+    dispatch(rejectePage());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  graphql(GET_PAGE, {
+    options: ownProps => ({
+      variables: {
+        path: ownProps.location.pathname
+      }
+    }),
+    skip: false
+  })(DynamicPage)
+);

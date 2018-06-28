@@ -16,9 +16,7 @@ class Authentication extends Component {
     super();
     this.state = {
       phoneNumber: 123,
-      pinCode: 456,
-      authenticationMethodIsPhone: true,
-      shouldRedirect: false
+      pinCode: 456
     };
   }
 
@@ -88,6 +86,7 @@ class Authentication extends Component {
             <button onClick={this._handlePhoneSubmit}>
               Logga in med telefonnummer
             </button>
+            <button onClick={this._handleSubmit}>Logga in!</button>
           </div>
         )}
       </main>
