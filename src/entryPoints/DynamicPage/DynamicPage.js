@@ -1,33 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { graphql } from "react-apollo";
-
 import { GET_PAGE } from "schemas/page";
-
 import { updatePage } from "reduxStore/actions/page";
-import WithCss from "hocs/styles/WithCss";
-import { setTokenCookie, deleteTokenCookie } from "utils/helpers/cookies";
 
-import s from "./DynamicPage.css";
+import ConfigurablePage from "./components/ConfigurablePage";
 
 class DynamicPage extends Component {
-  constructor() {
-    super();
-
-    this.handleSetTokenCookie = this.handleSetTokenCookie.bind(this);
-    this.handleDeleteTokenCookie = this.handleDeleteTokenCookie.bind(this);
-  }
-
-  handleSetTokenCookie() {
-    setTokenCookie({
-      token: "abc123"
-    });
-  }
-
-  handleDeleteTokenCookie() {
-    deleteTokenCookie();
-  }
-
   static getDerivedStateFromProps(props) {
     if (props.data) {
       if (props.data.loading === false && props.data.page) {
@@ -40,22 +19,12 @@ class DynamicPage extends Component {
 
   render() {
     console.log(this.props);
-    // const { currentUser, authenticated } = this.props;
 
     return (
       <main>
-        {this.props.fulfilled ? (
-          <h1>{this.props.page.fields.title}</h1>
-        ) : (
-          <h1> DynamicPage route</h1>
+        {this.props.fulfilled && (
+          <ConfigurablePage page={this.props.data.page} />
         )}
-        <button onClick={this.handleSetTokenCookie}>
-          {" "}
-          Sätt en token kaka{" "}
-        </button>{" "}
-        <button onClick={this.handleDeleteTokenCookie}>
-          Radera en token kaka{" "}
-        </button>{" "}
       </main>
     );
   }
