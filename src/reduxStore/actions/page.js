@@ -8,4 +8,8 @@ export const updatePage = pageData => ({
   pageData
 });
 
+export const rejectePage = pageData => ({
+  type: PAGE_REJECTED
+});
+
 export default "";
