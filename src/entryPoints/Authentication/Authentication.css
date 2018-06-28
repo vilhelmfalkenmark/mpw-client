@@ -1,5 +1,7 @@
+@import "mixins/grid";
+
 .container {
-  background: white;
+  @mixin entryPoint;
 }
 
 .label {

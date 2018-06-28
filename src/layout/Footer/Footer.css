@@ -1,0 +1,7 @@
+.container {
+  min-height: 12rem;
+  flex-shrink: 0;
+  width: 100%;
+  background: #fff;
+  position: relative;
+}

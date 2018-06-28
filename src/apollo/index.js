@@ -11,7 +11,7 @@ const httpLink = new HttpLink({
   uri: `${HTTP_END_POINT}/api`,
   useGETForQueries: true,
   headers: {
-    token: getTokenCookie()
+    token: getTokenCookie() || "Ingen token"
   }
 });
 

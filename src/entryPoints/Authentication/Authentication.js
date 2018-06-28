@@ -30,10 +30,19 @@ class Authentication extends Component {
   };
 
   _handleSubmit = () => {
-    this.props.postPhoneAuthentication({
-      phoneNumber: this.state.phoneNumber,
-      pinCode: this.state.pinCode
-    });
+    this.props
+      .postPhoneAuthentication({
+        variables: {
+          phoneNumber: this.state.phoneNumber,
+          pinCode: this.state.pinCode
+        }
+      })
+      .then(({ data }) => {
+        console.log(data, " <-- data");
+      })
+      .catch(e => {
+        console.error("Fel inloggningsuppgifter");
+      });
   };
 
   render() {
