@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { graphql } from "react-apollo";
 import { GET_PAGE } from "schemas/page";
 import { updatePage, rejectePage } from "reduxStore/actions/page";
+import ErrorPage from "components/ErrorPage";
 
 import ConfigurablePage from "./components/ConfigurablePage";
 
@@ -26,10 +27,18 @@ class DynamicPage extends Component {
   render() {
     console.log(this.props);
 
+    const renderErrorPage = () => {
+      if (this.props.data.error.graphQLErrors[0].code === 404) {
+        return <ErrorPage code={404} />;
+      } else {
+        return <ErrorPage code={500} />;
+      }
+    };
+
     return (
       <main>
         {this.props.fulfilled && <ConfigurablePage page={this.props.page} />}
-        {this.props.rejected && <div>Page not found</div>}
+        {this.props.rejected && renderErrorPage()}
       </main>
     );
   }
