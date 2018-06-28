@@ -6,6 +6,38 @@ import WithCss from "hocs/styles/WithCss";
 import s from "./Header.css";
 
 class Header extends Component {
+  _renderOpenRoutes() {
+    return Routes.filter(route => route.requiresAuthentication === false).map(
+      (route, index) => (
+        <li key={index}>
+          <NavLink
+            exact={route.exact}
+            to={route.navLink}
+            className={s({ link: true })}
+            activeClassName={s({ isActive: true })}
+          >
+            {route.title}
+          </NavLink>
+        </li>
+      )
+    );
+  }
+
+  _renderLoggedInRoutes() {
+    return Routes.map((route, index) => (
+      <li key={index}>
+        <NavLink
+          exact={route.exact}
+          to={route.navLink}
+          className={s({ link: true })}
+          activeClassName={s({ isActive: true })}
+        >
+          {route.title}
+        </NavLink>
+      </li>
+    ));
+  }
+
   render() {
     return (
       <header className={s({ container: true })}>
@@ -14,18 +46,9 @@ class Header extends Component {
             <p>Inloggad som {this.props.currentUser.name}</p>
           )}
           <ul>
-            {Routes.map((route, index) => (
-              <li key={index}>
-                <NavLink
-                  exact={route.exact}
-                  to={route.path}
-                  className={s({ link: true })}
-                  activeClassName={s({ isActive: true })}
-                >
-                  {route.title}
-                </NavLink>
-              </li>
-            ))}
+            {this.props.authenticated
+              ? this._renderLoggedInRoutes()
+              : this._renderOpenRoutes()}
           </ul>
         </nav>
       </header>

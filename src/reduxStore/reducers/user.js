@@ -1,4 +1,5 @@
 import {
+  LOG_OUT_USER,
   USER_FETCHING,
   USER_REJECTED,
   USER_FULFILLED
@@ -14,6 +15,9 @@ export const INITIAL_STATE = {
 
 const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LOG_OUT_USER: {
+      return Object.assign({}, INITIAL_STATE);
+    }
     case USER_FETCHING: {
       return Object.assign({}, state, {
         fetching: true
@@ -35,6 +39,7 @@ const user = (state = INITIAL_STATE, action) => {
         rejected: true
       });
     }
+
     default:
       return state;
   }

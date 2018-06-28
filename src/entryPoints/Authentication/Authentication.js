@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import WithCss from "hocs/styles/WithCss";
+import { Redirect } from "react-router";
 import {
   POST_PHONE_AUTHENTICATION,
   POST_EMAIL_AUTHENTICATION
 } from "schemas/authentication";
+import { setTokenCookie } from "utils/helpers/cookies";
+
 import { graphql, compose } from "react-apollo";
 
 import s from "./Authentication.css";
@@ -13,7 +16,9 @@ class Authentication extends Component {
     super();
     this.state = {
       phoneNumber: 123,
-      pinCode: 456
+      pinCode: 456,
+      authenticationMethodIsPhone: true,
+      shouldRedirect: false
     };
   }
 
@@ -29,7 +34,7 @@ class Authentication extends Component {
     });
   };
 
-  _handleSubmit = () => {
+  _handlePhoneSubmit = () => {
     this.props
       .postPhoneAuthentication({
         variables: {
@@ -38,7 +43,10 @@ class Authentication extends Component {
         }
       })
       .then(({ data }) => {
-        console.log(data, " <-- data");
+        setTokenCookie({ token: data.postPhoneAuthentication.token });
+        this.setState({
+          shouldRedirect: true
+        });
       })
       .catch(e => {
         console.error("Fel inloggningsuppgifter");
@@ -46,10 +54,12 @@ class Authentication extends Component {
   };
 
   render() {
-    const { phoneNumber, pinCode } = this.state;
+    const { phoneNumber, pinCode, shouldRedirect } = this.state;
 
     return (
       <main className={s({ container: true })}>
+        {shouldRedirect && <Redirect to="/" />}
+
         {this.props.authenticated ? (
           <div>
             <h1>Du är inloggad</h1>
@@ -75,7 +85,9 @@ class Authentication extends Component {
                 onChange={this._handlePinCodeOnChange}
               />
             </label>
-            <button onClick={this._handleSubmit}>Logga in!</button>
+            <button onClick={this._handlePhoneSubmit}>
+              Logga in med telefonnummer
+            </button>
           </div>
         )}
       </main>

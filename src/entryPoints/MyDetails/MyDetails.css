@@ -1,0 +1,5 @@
+@import "mixins/grid";
+
+.container {
+  @mixin entryPoint;
+}

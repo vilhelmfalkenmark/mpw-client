@@ -1,0 +1,8 @@
+@import "mixins/grid";
+
+.container {
+  @mixin entryPoint;
+
+  min-height: 50rem;
+  background: red;
+}
