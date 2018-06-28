@@ -9,6 +9,9 @@ class Header extends Component {
   render() {
     return (
       <nav>
+        {this.props.authenticated && (
+          <p>Inloggad som {this.props.currentUser.name}</p>
+        )}
         <ul>
           {Routes.map((route, index) => (
             <li key={index}>

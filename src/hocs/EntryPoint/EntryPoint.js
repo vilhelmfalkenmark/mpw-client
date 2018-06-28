@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import Header from "layout/Header";
 
-function EntryPoint({ EntryPoint, RenderHeader, RenderFooter }) {
+function EntryPoint({ EntryPoint, renderHeader, renderFooter }) {
   return class extends Component {
     render() {
       return (
         <div>
-          {RenderHeader && <Header />}
+          {renderHeader && (
+            <Header
+              currentUser={this.props.currentUser}
+              authenticated={this.props.authenticated}
+            />
+          )}
           <EntryPoint {...this.props} />
-          {RenderFooter && <footer>Jag är en footer!</footer>}
+          {renderFooter && <footer>Jag är en footer!</footer>}
         </div>
       );
     }

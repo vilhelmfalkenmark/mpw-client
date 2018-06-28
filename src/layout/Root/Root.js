@@ -31,11 +31,11 @@ class Root extends Component {
                     component={AuthenticateBeforeRender({
                       EntryPoint: EntryPoint({
                         EntryPoint: route.component,
-                        RenderHeader: route.renderHeader,
-                        RenderFooter: route.renderFooter
+                        renderHeader: route.renderHeader,
+                        renderFooter: route.renderFooter
                       }),
-                      ApolloClient: client,
-                      RequiresAuthentication: route.requiresAuthentication
+                      // ApolloClient: client,
+                      pageRequiresAuthentication: route.requiresAuthentication
                     })}
                   />
                 ))}

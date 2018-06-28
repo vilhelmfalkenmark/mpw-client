@@ -1,4 +1,6 @@
 @import "variables/colors";
+@import "normalize";
+@import "base";
 
 .container {
   background: var(--color-b-dark-grey);

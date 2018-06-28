@@ -1,34 +1,32 @@
 import {
-  USER_FETCHING,
-  USER_REJECTED,
-  USER_FULFILLED
-} from "reduxStore/actions/user";
+  PAGE_FETCHING,
+  PAGE_REJECTED,
+  PAGE_FULFILLED
+} from "reduxStore/actions/page";
 
 export const INITIAL_STATE = {
   fetching: false,
   rejected: false,
   fulfilled: false,
-  authenticated: false,
-  currentUser: {}
+  pageData: {}
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const page = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case USER_FETCHING: {
+    case PAGE_FETCHING: {
       return Object.assign({}, state, {
         fetching: true
       });
     }
-    case USER_FULFILLED: {
+    case PAGE_FULFILLED: {
       return Object.assign({}, state, {
         fulfilled: true,
         fetching: false,
         rejected: false,
-        authenticated: true,
-        currentUser: { ...action.payload }
+        pageData: action.pageData
       });
     }
-    case USER_REJECTED: {
+    case PAGE_REJECTED: {
       return Object.assign({}, state, {
         fulfilled: false,
         fetching: false,
@@ -40,4 +38,4 @@ const user = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default user;
+export default page;
