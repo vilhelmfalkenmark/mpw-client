@@ -36,6 +36,8 @@ class Authentication extends Component {
   };
 
   _handlePhoneSubmit = () => {
+    console.log("hej!");
+
     this.props
       .postPhoneAuthentication({
         variables: {
@@ -87,7 +89,6 @@ class Authentication extends Component {
             <button onClick={this._handlePhoneSubmit}>
               Logga in med telefonnummer
             </button>
-            <button onClick={this._handleSubmit}>Logga in!</button>
           </div>
         )}
       </main>

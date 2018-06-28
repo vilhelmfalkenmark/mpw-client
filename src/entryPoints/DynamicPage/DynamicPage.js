@@ -5,6 +5,7 @@ import { GET_PAGE } from "schemas/page";
 import { updatePage, rejectePage } from "reduxStore/actions/page";
 import ErrorPage from "components/ErrorPage";
 
+import { getHTTPErrorCode } from "utils/selectors/contentful";
 import ConfigurablePage from "./components/ConfigurablePage";
 
 class DynamicPage extends Component {
@@ -28,7 +29,9 @@ class DynamicPage extends Component {
     console.log(this.props);
 
     const renderErrorPage = () => {
-      if (this.props.data.error.graphQLErrors[0].code === 404) {
+      const codeIs404 = getHTTPErrorCode(this.props);
+
+      if (codeIs404) {
         return <ErrorPage code={404} />;
       } else {
         return <ErrorPage code={500} />;
