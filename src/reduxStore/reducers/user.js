@@ -1,4 +1,5 @@
 import {
+  LOG_IN_USER,
   LOG_OUT_USER,
   USER_FETCHING,
   USER_REJECTED,
@@ -15,6 +16,11 @@ export const INITIAL_STATE = {
 
 const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LOG_IN_USER: {
+      return Object.assign({}, state, {
+        authenticated: true
+      });
+    }
     case LOG_OUT_USER: {
       return Object.assign({}, INITIAL_STATE);
     }
