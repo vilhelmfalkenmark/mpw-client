@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { logInUser } from "reduxStore/actions/user";
 import WithCss from "hocs/styles/WithCss";
 import { Redirect } from "react-router";
 import {
@@ -17,8 +19,7 @@ class Authentication extends Component {
     this.state = {
       phoneNumber: 123,
       pinCode: 456,
-      authenticationMethodIsPhone: true,
-      shouldRedirect: false
+      authenticationMethodIsPhone: true
     };
   }
 
@@ -44,9 +45,7 @@ class Authentication extends Component {
       })
       .then(({ data }) => {
         setTokenCookie({ token: data.postPhoneAuthentication.token });
-        this.setState({
-          shouldRedirect: true
-        });
+        this.props.logInUser();
       })
       .catch(e => {
         console.error("Fel inloggningsuppgifter");
@@ -54,11 +53,11 @@ class Authentication extends Component {
   };
 
   render() {
-    const { phoneNumber, pinCode, shouldRedirect } = this.state;
+    const { phoneNumber, pinCode } = this.state;
 
     return (
       <main className={s({ container: true })}>
-        {shouldRedirect && <Redirect to="/" />}
+        {this.props.authenticated && <Redirect to="/" />}
 
         {this.props.authenticated ? (
           <div>
@@ -95,11 +94,26 @@ class Authentication extends Component {
   }
 }
 
-export default compose(
-  graphql(POST_PHONE_AUTHENTICATION, {
-    name: "postPhoneAuthentication"
-  }),
-  graphql(POST_EMAIL_AUTHENTICATION, {
-    name: "postEmailAuthentication"
-  })
-)(WithCss(Authentication, s));
+const mapStateToProps = state => ({
+  authenticated: state.user.authenticated
+});
+
+const mapDispatchToProps = dispatch => ({
+  logInUser: () => {
+    dispatch(logInUser());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  compose(
+    graphql(POST_PHONE_AUTHENTICATION, {
+      name: "postPhoneAuthentication"
+    }),
+    graphql(POST_EMAIL_AUTHENTICATION, {
+      name: "postEmailAuthentication"
+    })
+  )(WithCss(Authentication, s))
+);
