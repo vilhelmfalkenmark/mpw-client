@@ -1,6 +1,6 @@
 import universal from "react-universal-component";
-// import AuthenticateBeforeRender from "hocs/AuthenticateBeforeRender";
-// import store from "reduxStore/store";
+
+import EntryPointPlaceholder from "components/loading/EntryPointPlaceholder";
 
 //////////////////////////////////////////////////
 /**
@@ -12,7 +12,17 @@ const Authentication = universal(
     import(/* webpackChunkName: 'authentication' */ "entryPoints/Authentication"),
   {
     resolve: () => require.resolveWeak("entryPoints/Authentication"),
-    chunkName: "authentication"
+    chunkName: "authentication",
+    loading: EntryPointPlaceholder
+  }
+);
+
+const StartPage = universal(
+  () => import(/* webpackChunkName: 'startPage' */ "entryPoints/StartPage"),
+  {
+    resolve: () => require.resolveWeak("entryPoints/StartPage"),
+    chunkName: "startPage",
+    loading: EntryPointPlaceholder
   }
 );
 
@@ -21,7 +31,8 @@ const DynamicPage = universal(
   () => import(/* webpackChunkName: 'dynamicPage' */ "entryPoints/DynamicPage"),
   {
     resolve: () => require.resolveWeak("entryPoints/DynamicPage"),
-    chunkName: "dynamicPage"
+    chunkName: "dynamicPage",
+    loading: EntryPointPlaceholder
   }
 );
 
@@ -30,7 +41,18 @@ const Deliveries = universal(
   () => import(/* webpackChunkName: 'deliveries' */ "entryPoints/Deliveries"),
   {
     resolve: () => require.resolveWeak("entryPoints/Deliveries"),
-    chunkName: "deliveries"
+    chunkName: "deliveries",
+    loading: EntryPointPlaceholder
+  }
+);
+
+// MyDetails
+const MyDetails = universal(
+  () => import(/* webpackChunkName: 'myDetails' */ "entryPoints/MyDetails"),
+  {
+    resolve: () => require.resolveWeak("entryPoints/MyDetails"),
+    chunkName: "myDetails",
+    loading: EntryPointPlaceholder
   }
 );
 
@@ -43,17 +65,29 @@ export const AUTHENTICATION_ROUTE = {
   exact: true,
   title: "Logga in",
   path: "/login/",
+  navLink: "/login/",
   renderHeader: true,
   renderFooter: true,
   requiresAuthentication: false,
   component: Authentication
 };
 
-export const DYNAMIC_ROUTE = {
-  exact: false,
-  title: "Dynamic page",
+export const START_PAGE_ROUTE = {
+  exact: true,
+  title: "Välkommen till Linas Matkasse",
   path: "/",
-  // path: /^(?!.*(user|login)).*$/,
+  navLink: "/",
+  renderHeader: true,
+  renderFooter: true,
+  requiresAuthentication: false,
+  component: StartPage
+};
+
+export const DYNAMIC_ROUTE = {
+  exact: true,
+  title: "Dynamic page",
+  path: "/:content/",
+  navLink: "/om-oss/",
   renderHeader: true,
   renderFooter: true,
   requiresAuthentication: false,
@@ -64,10 +98,28 @@ export const DELIVERIES_ROUTE = {
   exact: true,
   title: "Leveranser",
   path: "/user/deliveries/",
+  navLink: "/user/deliveries/",
   renderHeader: true,
   renderFooter: true,
   requiresAuthentication: true,
   component: Deliveries
 };
 
-export default [AUTHENTICATION_ROUTE, DELIVERIES_ROUTE, DYNAMIC_ROUTE];
+export const MY_DETAILS_ROUTE = {
+  exact: true,
+  title: "Mitt konto",
+  path: "/user/mydetails/",
+  navLink: "/user/mydetails/",
+  renderHeader: true,
+  renderFooter: true,
+  requiresAuthentication: true,
+  component: MyDetails
+};
+
+export default [
+  AUTHENTICATION_ROUTE,
+  START_PAGE_ROUTE,
+  DELIVERIES_ROUTE,
+  DYNAMIC_ROUTE,
+  MY_DETAILS_ROUTE
+];

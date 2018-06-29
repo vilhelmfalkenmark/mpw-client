@@ -1,18 +1,28 @@
 import React, { Component } from "react";
+import WithCss from "hocs/styles/WithCss";
 import Header from "layout/Header";
+import Footer from "layout/Footer";
 
-function EntryPoint({ EntryPoint, RenderHeader, RenderFooter }) {
-  return class extends Component {
+import s from "./EntryPoint.css";
+
+function EntryPoint({ EntryPoint, renderHeader, renderFooter }) {
+  class EntryPointHoc extends Component {
     render() {
       return (
-        <div>
-          {RenderHeader && <Header />}
+        <div className={s({ container: true })}>
+          {renderHeader && (
+            <Header
+              currentUser={this.props.currentUser}
+              authenticated={this.props.authenticated}
+            />
+          )}
           <EntryPoint {...this.props} />
-          {RenderFooter && <footer>Jag är en footer!</footer>}
+          {renderFooter && <Footer />}
         </div>
       );
     }
-  };
+  }
+  return WithCss(EntryPointHoc, s);
 }
 
 export default EntryPoint;

@@ -1,13 +1,29 @@
-import initialState from "reduxStore/initialState";
-
 import {
+  LOG_IN_USER,
+  LOG_OUT_USER,
   USER_FETCHING,
   USER_REJECTED,
   USER_FULFILLED
 } from "reduxStore/actions/user";
 
-const user = (state = initialState.user, action) => {
+export const INITIAL_STATE = {
+  fetching: false,
+  rejected: false,
+  fulfilled: false,
+  authenticated: false,
+  currentUser: {}
+};
+
+const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LOG_IN_USER: {
+      return Object.assign({}, state, {
+        authenticated: true
+      });
+    }
+    case LOG_OUT_USER: {
+      return Object.assign({}, INITIAL_STATE);
+    }
     case USER_FETCHING: {
       return Object.assign({}, state, {
         fetching: true
@@ -18,7 +34,8 @@ const user = (state = initialState.user, action) => {
         fulfilled: true,
         fetching: false,
         rejected: false,
-        customerData: action.customerData
+        authenticated: true,
+        currentUser: { ...action.payload }
       });
     }
     case USER_REJECTED: {
@@ -28,6 +45,7 @@ const user = (state = initialState.user, action) => {
         rejected: true
       });
     }
+
     default:
       return state;
   }

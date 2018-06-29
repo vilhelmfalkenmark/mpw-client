@@ -2,9 +2,7 @@
 
 .container {
   @mixin entryPoint;
-}
 
-.label {
-  display: block;
-  margin-bottom: 1rem;
+  min-height: 50rem;
+  background: red;
 }
