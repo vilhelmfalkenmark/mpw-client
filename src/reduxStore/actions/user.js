@@ -10,8 +10,9 @@ export const userFulfilled = currentUser => ({
   payload: currentUser
 });
 
-export const logInUser = () => ({
-  type: LOG_IN_USER
+export const logInUser = currentUser => ({
+  type: LOG_IN_USER,
+  payload: currentUser
 });
 
 export const logOutUser = () => ({
