@@ -4,6 +4,7 @@ import { graphql } from "react-apollo";
 import { GET_PAGE } from "schemas/page";
 import { updatePage, rejectePage } from "reduxStore/actions/page";
 import ErrorPage from "components/ErrorPage";
+import { cleanRoute } from "utils/helpers/page";
 
 import { getHTTPErrorCode } from "utils/selectors/contentful";
 import ConfigurablePage from "./components/ConfigurablePage";
@@ -70,7 +71,7 @@ export default connect(
   graphql(GET_PAGE, {
     options: ownProps => ({
       variables: {
-        path: ownProps.location.pathname
+        path: cleanRoute(ownProps.location.pathname)
       }
     }),
     skip: false
