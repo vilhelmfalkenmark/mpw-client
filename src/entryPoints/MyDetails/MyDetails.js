@@ -4,8 +4,6 @@ import { logOutUser } from "reduxStore/actions/user";
 import { deleteTokenCookie } from "utils/helpers/cookies";
 
 import WithCss from "hocs/styles/WithCss";
-import { Redirect } from "react-router";
-
 import s from "./MyDetails.css";
 
 class MyDetails extends Component {
@@ -15,11 +13,8 @@ class MyDetails extends Component {
   };
 
   render() {
-    const { authenticated } = this.props;
-
     return (
       <main className={s({ container: true })}>
-        {!authenticated && <Redirect to="/login/" />}
         <h1>Mina uppgifter</h1>
         <button onClick={this._handleLogOut}>Logga ut!</button>
       </main>

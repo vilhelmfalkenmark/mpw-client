@@ -7,10 +7,7 @@ import { GET_USER_INFO } from "schemas/user";
 
 import { userFulfilled } from "reduxStore/actions/user";
 
-export function AuthenticateBeforeRender({
-  EntryPoint
-  // pageRequiresAuthentication
-}) {
+export function AuthenticateBeforeRender({ EntryPoint }) {
   class AuthenticationBeforeRender extends Component {
     static getDerivedStateFromProps(props) {
       if (props.data) {

@@ -32,10 +32,10 @@ class Root extends Component {
                       EntryPoint: EntryPoint({
                         EntryPoint: route.component,
                         renderHeader: route.renderHeader,
-                        renderFooter: route.renderFooter
-                      }),
+                        renderFooter: route.renderFooter,
+                        pageRequiresAuthentication: route.requiresAuthentication
+                      })
                       // ApolloClient: client,
-                      pageRequiresAuthentication: route.requiresAuthentication
                     })}
                   />
                 ))}
