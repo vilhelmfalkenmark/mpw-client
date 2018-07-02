@@ -6,6 +6,11 @@ export const POST_PHONE_AUTHENTICATION = gql`
       params: { phoneNumber: $phoneNumber, pinCode: $pinCode }
     ) {
       token
+      currentUser {
+        name
+        postcode
+        userId
+      }
     }
   }
 `;
@@ -16,6 +21,11 @@ export const POST_EMAIL_AUTHENTICATION = gql`
       params: { email: $email, pinCode: $pinCode }
     ) {
       token
+      currentUser {
+        name
+        postcode
+        userId
+      }
     }
   }
 `;

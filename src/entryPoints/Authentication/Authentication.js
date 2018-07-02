@@ -36,8 +36,6 @@ class Authentication extends Component {
   };
 
   _handlePhoneSubmit = () => {
-    console.log("hej!");
-
     this.props
       .postPhoneAuthentication({
         variables: {
@@ -47,10 +45,10 @@ class Authentication extends Component {
       })
       .then(({ data }) => {
         setTokenCookie({ token: data.postPhoneAuthentication.token });
-        this.props.logInUser();
+        this.props.logInUser(data.postPhoneAuthentication.currentUser);
       })
       .catch(e => {
-        console.error("Fel inloggningsuppgifter");
+        console.error(e, "Fel inloggningsuppgifter");
       });
   };
 
@@ -101,8 +99,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  logInUser: () => {
-    dispatch(logInUser());
+  logInUser: currentUser => {
+    dispatch(logInUser(currentUser));
   }
 });
 

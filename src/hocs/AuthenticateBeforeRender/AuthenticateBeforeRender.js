@@ -19,7 +19,6 @@ export function AuthenticateBeforeRender({ EntryPoint }) {
           props.userFulfilled(props.data.currentUser);
         }
       }
-
       return null;
     }
 
@@ -31,8 +30,6 @@ export function AuthenticateBeforeRender({ EntryPoint }) {
     }
 
     render() {
-      console.log("this.props");
-
       if (this.props.authenticated) {
         return <EntryPoint {...this.props} />;
       } else {

@@ -18,7 +18,8 @@ const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOG_IN_USER: {
       return Object.assign({}, state, {
-        authenticated: true
+        authenticated: true,
+        currentUser: { ...action.payload }
       });
     }
     case LOG_OUT_USER: {
